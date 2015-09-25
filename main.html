@@ -8,14 +8,17 @@
   </head>
   <body ng-app="chirpApp">	<!-- Connect body to Angular module chirpApp.js -->
     <div id='main' ng-controller="mainController"> <!-- Directive to hook main div to Angular mainController -->
-      <form>
-        <input type="text" placeholder="Your name" /> 
-        <textarea required maxlength="200" rows="3" placeholder="Say something"></textarea>
+      <form ng-Submit="post()"> <!-- Directive to assign mainController function post() to submit -->
+        <input required type="text" placeholder="Your name" ng-model="newPost.created_by" /> <!-- Directive to bind name and created_by in model -->
+        <textarea required maxlength="200" rows="3" placeholder="Say something" ng-model="newPost.text"></textarea> <!-- Directive to bind content and text in model -->
         <input class="button" type="submit" value="Chirp!" />
       </form>
       <div id="post-stream">
         <h4>Chirp Feed</h4>
-              <!--to be populated by Angular-->
+          <!--to be populated by Angular-->
+					<div class='post' ng-repeat="post in posts | orderBy:'created_at':true" ng-class-odd="'odd'" ng-class-even="'even'"> <!-- Directive to repeat items in an array posts filtered by orderby date -->
+            <p>{{post.created_by}} says {{post.text}} at {{post.created_at | date:"h:mma 'on' MMM d, y"}}</p>
+          </div>		
         </div>
       </div>
     </div>
